@@ -1,7 +1,3 @@
-# Self-Described Concepts in SAE Feature Space
-
-Probing whether model self-descriptions of behavioral concepts (e.g. *incorrect answers*, *flattery*) correspond to coherent, discriminative features in Gemma-2-2B's residual stream, using Gemma Scope SAEs at layers 6, 13, and 20.
-
 ## Stages
 
 | # | Stage | What it does |
@@ -16,17 +12,3 @@ Probing whether model self-descriptions of behavioral concepts (e.g. *incorrect 
 | 8.5 | Max-pool robustness | Re-runs stages 5–8 on max-pooled (rather than mean-pooled) features as a robustness check. |
 | 9 | Figures + tables | Recomputes per-feature details, generates the 6-panel main figure, layer-trajectory plot, lexical-vs-semantic figure, and LaTeX top-features table. |
 | 9.5 | Cluster analysis | K-means over top-30 feature label embeddings per concept (k=2–6, silhouette-selected). Tests whether discriminative features form one coherent cluster aligned to the concept (*monolithic*) or fragment into sub-themes (*decomposed*). |
-
-## Result summary
-
-Discriminative features exist and are statistically robust — top features clear Cohen's *d* > 1.5 at layer 13 for both concepts and survive the permutation null. But the features don't sit where the model's self-description says they should:
-
-| Concept | Best-cluster *k* | Silhouette | Top-cluster sim. to self-verbalization |
-|---|---|---|---|
-| `cooking_unrelated` (sanity check) | 2 | 0.162 | **0.863** |
-| `incorrect_answers` | 2 | 0.137 | 0.381 |
-| `flattery` | 6 | 0.078 | 0.466 |
-
-`cooking_unrelated` behaves as expected: the dominant cluster is recognizably about cooking. `incorrect_answers` and `flattery` don't — their top discriminative features fragment across sub-themes (punctuation, pronouns, formatting, judgment vocabulary) and none align tightly with the model's own description of what those behaviors are.
-
-So the concepts are detectable, but at the feature level they appear *decomposed* rather than monolithic — the model's self-verbalization is not a faithful pointer to a single feature direction.
